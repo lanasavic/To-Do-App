@@ -1,0 +1,413 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
+$button-border-radius: 4px;
+$checkbox-size: 20px;
+
+$add-button-color-base: #6e6e6e;
+$add-button-color-hover: #505050;
+$delete-button-color-base: #d9534f;
+$delete-button-color-hover: #c9302c;
+
+$orange: rgba(240,89,35,1) 0%;
+$blue: rgba(40,171,226,1) 100%;
+$orange-tint-60: #f9bda7;
+$blue-tint-60: #a9ddf3;
+
+:root {
+  font-family: "Poppins";
+  color-scheme: light dark;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  overflow: hidden;
+  background: #333;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, $orange, $blue);
+}
+
+.navbar-brand {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+todo-list {
+  width: 100%;
+  max-width: 500px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  &__message {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-weight: bold;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: 100%;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  &__input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+      &--add-task{
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: white;
+        color: black;
+        border-radius: 5px;
+      }
+
+      &--add-task-button {
+        background-color: $add-button-color-base;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: $button-border-radius;
+      
+        &:hover {
+          background-color: $add-button-color-hover;
+        }
+      }
+    }
+
+    &__api-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+
+      &--api-task-number{
+        padding: 5px;
+        box-sizing: border-box;
+        background-color: white;
+        color: black;
+        border-radius: 5px;
+      }
+
+      &--add-api-task-button {
+        background-color: $add-button-color-base;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: $button-border-radius;
+
+        &:hover {
+          background-color: $add-button-color-hover;
+        }
+      }
+    }
+
+    &__button-group {
+      text-align: center;
+
+      &--delete-all, &--delete-manual, &--delete-api {
+        background-color: $delete-button-color-base;
+        border:none;
+        border-radius: $button-border-radius;
+        padding: 5px 10px;
+        margin-top: 3px;
+        cursor: pointer;
+        font-size: large;
+
+        &:hover{
+          background-color: $delete-button-color-hover;
+        }
+      }
+    }
+
+    &__task-group {
+      margin-top: 10px;
+      max-height: 500px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+      }
+    }
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  &__task {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.completed span{
+      text-decoration: line-through;
+      color: #515151;
+    }
+
+    & span {
+      flex-grow: 1;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.manual-task {
+      color: $orange-tint-60;
+    }
+    
+    &.api-task {
+      color: $blue-tint-60;
+    }
+  }
+
+  &__checkbox {
+    margin-top: 5px;
+    
+    & * {
+      box-sizing: inherit;
+    }
+
+    & *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    &--input {
+      appearance: none;
+      -webkit-appearance: none;
+    
+      margin-top: 5px;
+      margin-right: 10px;
+      width: $checkbox-size;
+      height: $checkbox-size;
+      border: 2px solid white;
+      outline: none;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid var(--bc, var(--border));
+      background: var(--b, var(--background));
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+      
+      --active: #515151;
+      --active-inner: #fff;
+      --focus: 2px rgba(39, 94, 254, .3);
+      --border: #BBC1E1;
+      --border-hover: #275EFE;
+      --background: #fff;
+      --disabled: #F6F8FF;
+      --disabled-inner: #E1E6F9;
+
+      @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+        &:after {
+          content: "";
+          display: block;
+          left: 0;
+          top: 0;
+          position: absolute;
+          transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+        }
+        &:checked {
+          --b: var(--active);
+          --bc: var(--active);
+          --d-o: .3s;
+          --d-t: .6s;
+          --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+        }
+        &:disabled {
+          --b: var(--disabled);
+          cursor: not-allowed;
+          opacity: 0.9;
+        }
+        &:disabled:checked {
+          --b: var(--disabled-inner);
+          --bc: var(--border);
+        }
+        &:disabled + label {
+          cursor: not-allowed;
+        }
+        &:hover:not(:checked):not(:disabled) {
+          --bc: var(--border-hover);
+        }
+        &:focus {
+          box-shadow: 0 0 0 var(--focus);
+        }
+        &:not(.switch):after {
+          opacity: var(--o, 0);
+        }
+        &:not(.switch):checked {
+          --o: 1;
+        }
+        & + label {
+          display: inline-block;
+          vertical-align: middle;
+          cursor: pointer;
+          margin-left: 4px;
+        }
+        &:not(.switch) {
+          border-radius: 7px;
+        }
+        &:not(.switch):after {
+          width: 5px;
+          height: 9px;
+          border: 2px solid var(--active-inner);
+          border-top: 0;
+          border-left: 0;
+          left: 7px;
+          top: 4px;
+          transform: rotate(var(--r, 20deg));
+        }
+        &:not(.switch):checked {
+          --r: 43deg;
+        }
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      white-space: normal;
+    }
+
+    &--delete-task-button {
+      background-color: $delete-button-color-base;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: $button-border-radius;
+      font-size: large;
+    
+      &:hover {
+        background-color: $delete-button-color-hover;
+      }
+    }
+
+    &--delete-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  :root{
+    font-size: x-large;
+  }
+  todo-list {
+    width: 100%;
+    max-width: 700px;
+  }
+  .todo-list__task-group {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width:992px){
+  :root{
+    font-size: large;
+  }
+  todo-list {
+    width: 100%;
+    max-width: 550px;
+  }
+  .todo-list__task-group {
+    max-height: 550px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  :root{
+    font-size: x-large;
+  }
+  todo-list {
+    width: 100%;
+    max-width: 700px;
+  }
+  .todo-list__task-group {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  :root{
+    font-size: x-large;
+  }
+  todo-list {
+    width: 100%;
+    max-width: 600px;
+  }
+  .todo-list__task-group {
+    max-height: 450px;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width:600px){
+  :root{
+    font-size: large;
+  }
+  todo-list {
+    width: 100%;
+    max-width: 300px;
+  }
+  .todo-list__task-group {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+}
